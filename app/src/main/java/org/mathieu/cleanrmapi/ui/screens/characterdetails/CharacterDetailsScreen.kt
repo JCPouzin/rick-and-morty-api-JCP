@@ -1,12 +1,15 @@
 package org.mathieu.cleanrmapi.ui.screens.characterdetails
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -41,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
+import org.mathieu.cleanrmapi.ui.core.composables.EpisodeCard
 import org.mathieu.cleanrmapi.ui.core.composables.PreviewContent
 import org.mathieu.cleanrmapi.ui.core.theme.Purple40
 
@@ -64,6 +70,7 @@ fun CharacterDetailsScreen(
 }
 
 
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 private fun CharacterDetailsContent(
@@ -141,7 +148,9 @@ private fun CharacterDetailsContent(
                 }
 
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     SubcomposeAsyncImage(
@@ -156,6 +165,20 @@ private fun CharacterDetailsContent(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Text(text = state.name)
+
+                    LazyColumn(
+                        contentPadding = PaddingValues(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        items(state.episodes){ episode ->
+                            EpisodeCard(
+                                modifier = Modifier.fillMaxWidth(),
+                                date = episode.airDate,
+                                episode = episode.episode,
+                                name = episode.name)
+                        }
+
+                    }
                 }
 
 
@@ -170,4 +193,3 @@ private fun CharacterDetailsContent(
 private fun CharacterDetailsPreview() = PreviewContent {
     CharacterDetailsContent()
 }
-

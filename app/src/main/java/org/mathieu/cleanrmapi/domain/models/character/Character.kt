@@ -1,4 +1,5 @@
 package org.mathieu.cleanrmapi.domain.models.character
+import org.mathieu.cleanrmapi.domain.models.episode.Episode
 
 /**
  * Represents a detailed characterization, typically derived from a data source or API.
@@ -22,7 +23,9 @@ data class Character(
     val gender: CharacterGender,
     val origin: Pair<String, Int>,
     val location: Pair<String, Int>,
-    val avatarUrl: String
+    val avatarUrl: String,
+
+    val episodes : List<Episode>
 )
 
 /**

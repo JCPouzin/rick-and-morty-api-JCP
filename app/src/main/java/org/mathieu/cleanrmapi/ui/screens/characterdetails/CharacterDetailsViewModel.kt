@@ -2,6 +2,7 @@ package org.mathieu.cleanrmapi.ui.screens.characterdetails
 
 import android.app.Application
 import org.koin.core.component.inject
+import org.mathieu.cleanrmapi.domain.models.episode.Episode
 import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
 import org.mathieu.cleanrmapi.ui.core.ViewModel
 
@@ -16,7 +17,7 @@ class CharacterDetailsViewModel(application: Application) : ViewModel<CharacterD
         ) {
 
             onSuccess {
-                updateState { copy(avatarUrl = it.avatarUrl, name = it.name, error = null) }
+                updateState { copy(avatarUrl = it.avatarUrl, name = it.name, episodes = it.episodes, error = null) }
             }
 
             onFailure {
@@ -35,5 +36,6 @@ data class CharacterDetailsState(
     val isLoading: Boolean = true,
     val avatarUrl: String = "",
     val name: String = "",
-    val error: String? = null
+    val error: String? = null,
+    val episodes : List<Episode> = emptyList()
 )
